@@ -1,0 +1,2 @@
+Before: roblox.com/games/{{ ID }}?privateServerLinkCode={{ ID }}
+After: roblox.com/share?code={{ ID }}&type=Server
