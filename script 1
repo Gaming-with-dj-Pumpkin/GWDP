@@ -1,0 +1,94 @@
+Print(“Hello world”) 
+Script 1
+local  player  = game.Players.LocalPlayer
+local char = player.Character
+local mouse = player:GetMouse()
+local camera = game.Workspace. CurrentCamera
+local equipped = false
+local object = nil
+
+
+local function findpos(ingorelist)
+	if mouse.Target ~= nil and object ~= nil then
+		mouse.TargetFilter = object.PrimaryPart
+		local unitray = camera:ScreenPointToRay(mouse.X, mouse.Y )
+		local raycastParama = RaycastParams.new()
+		raycastParama.FilterType = Enum.RaycastFilterType.Blacklist
+		raycastParams.Filterdescencendantsinstances = ingorelist
+
+		local ray = workspace:Raycast(unitray.Origin, unitray.Direction '500' , raycastParams)
+		if ray then
+			return ray.Position, ray.Instance, ray.Normal
+		end 
+	end
+end
+
+script 2
+
+
+script.Parent.Equipped:Connect(function()
+	equipped = true
+	object = game.ReplicatedStorage.Object.Wood:Clone()
+	object.Parent = workspace
+	local ignorelist = (char, object.PrimaryPart)
+
+	script.Parent.Activated:Connect(function()
+		local pom, targer, normal =  findpos(ignorelist)
+		script.Parent.RemoteEvent:FireServer(pom, targer, normal)
+	end)
+	
+	while mouse ~= nil and equipped == true do
+		wait()
+		local pos, target, normal = findpos(ignorelist)
+		if pos ~= nil then
+			object:SetPrimaryPartCFrame(CFrame.new(math.ceil(pos.X + normal.X), math.ceil(pos.Y + normal.Y), math.ceil(Pos.Z + normal.Z)))
+
+		end
+	end
+end)
+
+script.Parent.Unequipped:Connect(function()
+	equipped = false
+	object:Destroy()
+	object = nil
+end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+local stages = game.ReplicatedStorage.Stages 
+
+local stage1 = stages:GetChildren()(math.random(1, #stages:Getchildren()))
+local stage2 = stages:GetChildren()(math.random(1, #stages:Getchildren()))
+local stage3 = stages:GetChildren()(math.random(1, #stages:Getchildren()))
+local stage4 = stages:GetChildren()(math.random(1, #stages:Getchildren()))
+local stage5 = stages:GetChildren()(math.random(1, #stages:Getchildren()))
+stage1 = stage1:clone()
+stage2 = stage1:clone()
+stage3 = stage1:clone()
+stage4 = stage1:clone()
+stage5 = stage1:clone()
+stage1.parrent = game.Workspace.Stages
+stage2.parrent = game.Workspace.Stages
+stage3.parrent = game.Workspace.Stages
+stage4.parrent = game.Workspace.Stages
+stage5.parrent = game.Workspace.Stages
+stage1.PrimaryPart = stage1:findfirstchild("center"):findfirstchild("center")
+stage1:SetPrimartyPartCFrame(game.Workspace.Centerpoints.center1.Cframe)
+stage2.PrimaryPart = stage2:findfirstchild("center"):findfirstchild("center")
+stage2:SetPrimartyPartCFrame(game.Workspace.Centerpoints.center2.Cframe)
+stage3.PrimaryPart = stage3:findfirstchild("center"):findfirstchild("center")
+stage3:SetPrimartyPartCFrame(game.Workspace.Centerpoints.center3.Cframe)
+stage4.PrimaryPart = stage4:findfirstchild("center"):findfirstchild("center")
+stage4:SetPrimartyPartCFrame(game.Workspace.Centerpoints.center4.Cframe)
+stage5.PrimaryPart = stage5:findfirstchild("center"):findfirstchild("center")
+stage5:SetPrimartyPartCFrame(game.Workspace.Centerpoints.center5.Cframe)
